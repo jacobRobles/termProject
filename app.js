@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const mainRoutes = require('./routes/main'); // new main router
 
+
 // Serve static files (like CSS/images) from public folder
 app.use(express.static('public'));
 
