@@ -1,30 +1,40 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 
-// Home page route
+
+// Home page
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.render('index');
 });
 
-// Login page route
-router.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/login.html'));
-});
-
-// Profile page route
-router.get('/profile', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/profile.html'));
-});
-
-// Payment page route
-router.get('/payment', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/payment.html'));
-});
-
-// FAQ page route
+// FAQ page
 router.get('/faq', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/faq.html'));
+  res.render('faq');
+});
+
+// Login page
+router.get('/login', (req, res) => {
+  res.render('login');
+});
+
+// Payment page
+router.get('/payment', (req, res) => {
+  res.render('payment');
+});
+
+// products page
+router.get('/products', (req, res) => {
+  res.render('products');
+});
+
+// Profile page
+router.get('/profile', (req, res) => {
+  res.render('profile');
+});
+
+// Sign-in page
+router.get('/sign-in', (req, res) => {
+  res.render('sign-in');
 });
 
 module.exports = router;

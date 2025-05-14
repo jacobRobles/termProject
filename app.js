@@ -1,14 +1,22 @@
 const express = require('express');
-const app = express();
 const path = require('path');
-const mainRoutes = require('./routes/main'); // new main router
+const app = express();
+const port = process.env.PORT || 3000;
 
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-// Serve static files (like CSS/images) from public folder
-app.use(express.static('public'));
+// Serve static files from public folder
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', mainRoutes); // handles all routes in one file
+// Import routes
+const mainRoutes = require('./routes/main');
 
-app.listen(3000, () => {
-  console.log('Server running on http://localhost:3000');
+// Use routes
+app.use('/', mainRoutes);
+
+// Start server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });

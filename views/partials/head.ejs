@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cascadia</title>
+    <title><%= title %></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Base styles from CSS file */
@@ -417,161 +417,52 @@
             }
             
         }
+
+        /* FAQ page specific styles */
+        .banner {
+            background: url('https://i.redd.it/dm6qnoo452h61.jpg') center/cover no-repeat;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+        }
+        .banner::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4);
+        }
+        .banner h1 {
+            position: relative;
+            z-index: 1;
+            font-size: 32px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .faq-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        .faq-question {
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            display: none;
+            margin-top: 10px;
+            color: #555;
+        }
+        .faq-question.active + .faq-answer {
+            display: block;
+        }
     </style>
 </head>
-<body>
-
-    <header class="site-header">
-        <div class="header-left">
-            <a href="#" class="nav-link">Shop</a>
-        </div>
-        <div class="site-logo">Cascadia</div>
-        <div class="header-right">
-            <span class="icon search-trigger"><i class="fas fa-search"></i></span>
-            <a href="profile.html"><span class="icon">👤</span></a>
-            <span class="icon menu-trigger"><i class="fas fa-bars"></i></span>
-        </div>
-    </header>
-
-    <!-- Search Overlay -->
-    <div class="search-overlay" id="searchOverlay">
-        <div class="search-header">
-            <div class="search-input-container">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" class="search-input" placeholder="Search products...">
-            </div>
-            <button class="cancel-btn" id="cancelSearch">Cancel</button>
-        </div>
-        <div class="search-content">
-            <h2 class="popular-title">Popular Products</h2>
-            <ul class="popular-items">
-                <li class="popular-item">Sweater</li>
-                <li class="popular-item">T-Shirt</li>
-                <li class="popular-item">Shoes</li>
-                <li class="popular-item">Hats</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Navigation Menu Overlay -->
-    <div class="nav-overlay" id="navOverlay">
-        <div class="nav-header">
-            <a href="login.html" class="nav-login-link">Login</a>
-            <div class="nav-controls">
-                <span class="icon nav-search-icon"><i class="fas fa-search"></i></span>
-                <span class="icon nav-close" id="closeNavMenu"><i class="fas fa-times"></i></span>
-            </div>
-        </div>
-        
-        <div class="nav-content">
-            <div class="nav-columns">
-                <div class="nav-column">
-                    <ul class="nav-list">
-                        <li class="nav-item"><a href="#" class="nav-link-item">About Us</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link-item">Careers</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link-item">Our Socials</a></li>
-                    </ul>
-                </div>
-                <div class="nav-column">
-                    <ul class="nav-list">
-                        <li class="nav-item"><a href="#" class="nav-link-item">Help Center</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link-item">Returns</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link-item">FAQ</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="nav-quick-links">
-                <h3 class="quick-links-title">Quick Links</h3>
-                <ul class="quick-link-list">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="profile.html">My Account</a></li>
-                    <li><a href="payment.html">Checkout</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <section class="hero-banner">
-        <div class="hero-content">
-            <h1>Adventure Awaits</h1>
-            <p>Gear built for every journey into the wild.</p>
-            <div class="hero-buttons">
-                <a href="#" class="btn">Shop Now</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="category-section">
-        <h2 class="section-title">Shop by Category</h2>
-        <div class="category-grid">
-            <div class="category-card">Jackets & Sweaters</div>
-            <div class="category-card">Boots & Shoes</div>
-            <div class="category-card">Backpacks</div>
-            <div class="category-card">Hats & Beanies</div>
-        </div>
-    </section>
-
-    
-
-    <footer class="site-footer">
-        <p>© 2025 Cascadia. All rights reserved.</p>
-        <p style="margin-top: 10px;"><a href="faq.html" style="color: #555; text-decoration: none;">FAQ</a></p>
-    </footer>
-
-    <script>
-        // Search overlay functionality
-        const searchTrigger = document.querySelector('.search-trigger');
-        const searchOverlay = document.getElementById('searchOverlay');
-        const cancelSearch = document.getElementById('cancelSearch');
-        const searchInput = document.querySelector('.search-input');
-        
-        searchTrigger.addEventListener('click', function() {
-            searchOverlay.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling behind overlay
-            searchInput.focus(); // Auto focus on the search input
-        });
-        
-        cancelSearch.addEventListener('click', function() {
-            searchOverlay.style.display = 'none';
-            document.body.style.overflow = ''; // Restore scrolling
-        });
-        
-        // Mobile/Web view toggle functionality can be added here
-        
-        // Popular items click handling
-        const popularItems = document.querySelectorAll('.popular-item');
-        popularItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const searchTerm = this.textContent.trim();
-                searchInput.value = searchTerm;
-                // Simulate a search or redirect to a search results page
-                // window.location.href = `search-results.html?query=${encodeURIComponent(searchTerm)}`;
-            });
-        });
-
-        // Navigation menu functionality
-        const menuTrigger = document.querySelector('.menu-trigger');
-        const navOverlay = document.getElementById('navOverlay');
-        const closeNavMenu = document.getElementById('closeNavMenu');
-        
-        menuTrigger.addEventListener('click', function() {
-            navOverlay.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling behind overlay
-        });
-        
-        closeNavMenu.addEventListener('click', function() {
-            navOverlay.style.display = 'none';
-            document.body.style.overflow = ''; // Restore scrolling
-        });
-        
-        // Connect the search icon in nav menu to open search overlay
-        const navSearchIcon = document.querySelector('.nav-search-icon');
-        navSearchIcon.addEventListener('click', function() {
-            navOverlay.style.display = 'none';
-            searchOverlay.style.display = 'block';
-            searchInput.focus();
-        });
-    </script>
-</body>
-</html>
