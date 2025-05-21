@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Cascadia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .site-logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .site-logo:hover {
+      text-decoration: none;
+      color: #111;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-left">
+      <a href="products.html" class="nav-link">Home</a>
+    </div>
+    <a href="index.html" class="site-logo">Cascadia</a>
+    <div class="header-right">
+      <a href="profile.html" class="icon"><i class="fas fa-user"></i></a>
+      <a href="payment.html" class="icon"><i class="fas fa-shopping-bag"></i></a>
+      <span class="icon menu-trigger"><i class="fas fa-bars"></i></span>
+    </div>
+  </header>
+
+  <!-- Nav Menu Overlay -->
+  <div class="nav-overlay" id="navOverlay">
+    <div class="nav-header">
+      <a href="login.html" class="nav-login-link">Login</a>
+      <div class="nav-controls">
+        <span class="icon nav-close" id="closeNavMenu"><i class="fas fa-times"></i></span>
+      </div>
+    </div>
+    <div class="nav-content">
+      <div class="nav-columns">
+        <div class="nav-column">
+          <ul class="nav-list">
+            <li class="nav-item"><a href="products.html" class="nav-link-item">Shop</a></li>
+            <li class="nav-item"><a href="profile.html" class="nav-link-item">Profile</a></li>
+            <li class="nav-item"><a href="payment.html" class="nav-link-item">Checkout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-container">
+    <div class="payment-form-container">
+      <h1 class="checkout-title">Checkout</h1>
+
+      <div class="checkout-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <span>Shipping</span>
+        </div>
+        <div class="step active">
+          <div class="step-number">2</div>
+          <span>Payment</span>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <span>Confirmation</span>
+        </div>
+      </div>
+
+      <form id="paymentForm" action="index.html">
+        <h2 class="section-title">Contact Information</h2>
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <i class="fas fa-envelope form-icon"></i>
+          <input type="email" id="email" class="form-control" placeholder="Email" required>
+        </div>
+
+        <h2 class="section-title">Shipping Address</h2>
+        <div class="form-group">
+          <label for="fullname" class="form-label">Full Name</label>
+          <i class="fas fa-user form-icon"></i>
+          <input type="text" id="fullname" class="form-control" placeholder="Full name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="address" class="form-label">Street Address</label>
+          <i class="fas fa-home form-icon"></i>
+          <input type="text" id="address" class="form-control" placeholder="Address" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="city" class="form-label">City</label>
+            <i class="fas fa-city form-icon"></i>
+            <input type="text" id="city" class="form-control" placeholder="City" required>
+          </div>
+          <div class="form-group">
+            <label for="zip" class="form-label">ZIP Code</label>
+            <i class="fas fa-map-pin form-icon"></i>
+            <input type="text" id="zip" class="form-control" placeholder="ZIP" required>
+          </div>
+        </div>
+
+        <h2 class="section-title">Payment Method</h2>
+        <div class="card-wrapper">
+          <div class="card-header">
+            <input type="radio" name="payment-method" id="credit-card" checked class="card-radio">
+            <label for="credit-card" class="card-title">Credit Card</label>
+            <div class="card-icons">
+              <img src="https://cdn-icons-png.flaticon.com/128/349/349221.png" alt="Visa" class="card-icon">
+              <img src="https://cdn-icons-png.flaticon.com/128/349/349228.png" alt="Mastercard" class="card-icon">
+              <img src="https://cdn-icons-png.flaticon.com/128/349/349230.png" alt="Amex" class="card-icon">
+            </div>
+          </div>
+          <div class="card-details">
+            <div class="form-group">
+              <label for="cardNumber" class="form-label">Card Number</label>
+              <i class="fas fa-credit-card form-icon"></i>
+              <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="expiry" class="form-label">Expiry Date</label>
+                <i class="fas fa-calendar form-icon"></i>
+                <input type="text" id="expiry" class="form-control" placeholder="MM/YY" required>
+              </div>
+              <div class="form-group">
+                <label for="cvc" class="form-label">Security Code</label>
+                <i class="fas fa-lock form-icon"></i>
+                <input type="text" id="cvc" class="form-control" placeholder="CVC" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="checkbox" id="save-info">
+          <label for="save-info">Save my information for next time</label>
+        </div>
+
+        <button type="submit" class="btn">Complete Purchase</button>
+        <button type="button" class="btn btn-secondary">Return to Cart</button>
+      </form>
+    </div>
+
+    <div id="cart-items"></div>
+
+    <div class="summary-totals">
+      <div class="summary-line">
+        <span>Subtotal</span>
+        <span id="subtotal-amount">$0.00</span>
+      </div>
+      <div class="summary-line">
+        <span>Shipping</span>
+        <span>$8.99</span>
+      </div>
+      <div class="summary-line">
+        <span>Estimated Tax</span>
+        <span id="estimated-tax">$0.00</span>
+      </div>
+      <div class="summary-line total">
+        <span>Total</span>
+        <span id="total-amount">$0.00</span>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p><a href="faq.html" class="footer-link">FAQ</a></p>
+    <p>© 2025 Cascadia. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Card formatting
+    document.getElementById('cardNumber').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      let formatted = '';
+      for (let i = 0; i < value.length; i++) {
+        if (i > 0 && i % 4 === 0) formatted += ' ';
+        formatted += value[i];
+      }
+      e.target.value = formatted;
+    });
+
+    document.getElementById('expiry').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 2) {
+        e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      } else {
+        e.target.value = value;
+      }
+    });
+
+    // Hamburger menu logic
+    const menuTrigger = document.querySelector('.menu-trigger');
+    const navOverlay = document.getElementById('navOverlay');
+    const closeNavMenu = document.getElementById('closeNavMenu');
+
+    if (menuTrigger && navOverlay && closeNavMenu) {
+      menuTrigger.addEventListener('click', () => {
+        navOverlay.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeNavMenu.addEventListener('click', () => {
+        navOverlay.style.display = 'none';
+        document.body.style.overflow = '';
+      });
+    }
+  </script>
+  <script src="js/payment.js"></script>
+</body>
+</html>

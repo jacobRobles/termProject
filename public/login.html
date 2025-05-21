@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Cascadia</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .site-logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .site-logo:hover {
+      color: #111;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-left">
+      <!-- Shop link removed -->
+    </div>
+    <a href="index.html" class="site-logo">Cascadia</a>
+    <div class="header-right">
+      <a href="profile.html"><span class="icon"><i class="fas fa-user"></i></span></a>
+      <a href="payment.html"><span class="icon"><i class="fas fa-shopping-bag"></i></span></a>
+      <span class="icon menu-trigger"><i class="fas fa-bars"></i></span>
+    </div>
+  </header>
+
+  <div class="login-container">
+    <h2 class="login-title">Sign in to your account</h2>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control" required>
+      </div>
+
+      <button type="submit" class="btn">Sign In</button>
+      <p id="login-message" style="margin-top: 10px;"></p>
+    </form>
+
+    <p class="text-center signup-link">
+      Don’t have an account? <a href="signup.html">Sign up</a>
+    </p>
+  </div>
+
+  <footer class="site-footer">
+    <p><a href="faq.html" class="footer-link">FAQ</a></p>
+    <p>© 2025 Cascadia. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const msg = document.getElementById('login-message');
+
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem('user', JSON.stringify(data));
+        msg.textContent = 'Login successful!';
+        msg.style.color = 'green';
+        setTimeout(() => window.location.href = 'profile.html', 1500);
+      } else {
+        msg.textContent = data.error || 'Login failed';
+        msg.style.color = 'red';
+      }
+    });
+  </script>
+</body>
+</html>

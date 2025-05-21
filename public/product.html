@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product Detail - Cascadia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-left">
+      <a href="index.html" class="nav-link">Shop</a>
+    </div>
+    <div class="site-logo">Cascadia</div>
+    <div class="header-right">
+      <a href="profile.html"><span class="icon"><i class="fas fa-user"></i></span></a>
+    </div>
+  </header>
+
+  <main class="product-detail-wrapper">
+    <div class="product-detail-card">
+      <img id="productImage" alt="Product image" class="product-detail-image" />
+      <div class="product-detail-info">
+        <h1 id="productName" class="product-title"></h1>
+        <p id="productPrice" class="product-price"></p>
+        <p id="productDescription" class="product-description"></p>
+        <button id="addToCartBtn" class="btn">Add to Cart</button>
+        <a href="products.html" class="btn btn-secondary" style="margin-top: 10px;">← Back to Products</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 Cascadia. All rights reserved.</p>
+  </footer>
+
+  <script src="js/productDetail.js"></script>
+</body>
+</html>
