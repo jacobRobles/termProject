@@ -36,10 +36,13 @@ Cascadia is a mock e-commerce website for outdoor gear. It allows users to brows
 2. Install Dependencies
    ```bash
    npm install
-3. Start the server
+3. Set up the database
+   ```bash
+   node setup.js   
+4. Start the server
    ```bash
    node app.js
-4. Open browser and go to
+5. Open browser and go to
    http://localhost:3000
 ## Team Members and Responsibilities
 
