@@ -2,8 +2,20 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./data/database.sqlite');
 
 db.serialize(() => {
-  db.run("DROP TABLE IF EXISTS products");
+  // Create users table
+  db.run("DROP TABLE IF EXISTS users");
+  db.run(`
+    CREATE TABLE users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
 
+  // Create products table
+  db.run("DROP TABLE IF EXISTS products");
   db.run(`
     CREATE TABLE products (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -12,6 +24,20 @@ db.serialize(() => {
       category TEXT NOT NULL,
       image TEXT,
       description TEXT
+    )
+  `);
+
+  // Create cart_items table
+  db.run("DROP TABLE IF EXISTS cart_items");
+  db.run(`
+    CREATE TABLE cart_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      product_id INTEGER NOT NULL,
+      quantity INTEGER DEFAULT 1,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id),
+      FOREIGN KEY (product_id) REFERENCES products(id)
     )
   `);
 
@@ -47,7 +73,7 @@ db.serialize(() => {
   });
 
   stmt.finalize();
-  console.log("Database reset");
+  console.log("Database reset with users, products, and cart_items tables");
 });
 
 db.close();
