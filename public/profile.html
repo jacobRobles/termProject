@@ -93,57 +93,69 @@
   </footer>
 
   <script>
-    // Grab user and cart from localStorage (might be empty thooo)
-    const user = JSON.parse(localStorage.getItem('user'));
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+     // Grab user from localStorage
+const user = JSON.parse(localStorage.getItem('user'));
 
-    const nameEl = document.querySelectorAll('.info-value')[0];
-    const emailEl = document.querySelectorAll('.info-value')[1];
-    const orderTableBody = document.querySelector('.order-table tbody');
+const nameEl = document.querySelectorAll('.info-value')[0];
+const emailEl = document.querySelectorAll('.info-value')[1];
+const orderTableBody = document.querySelector('.order-table tbody');
 
-    if (!user) {
-      alert('You are not logged in.');
-      window.location.href = 'login.html';
-    } else {
-      nameEl.textContent = user.name;
-      emailEl.textContent = user.email;
-    }
+if (!user) {
+  alert('You are not logged in.');
+  window.location.href = 'login.html';
+} else {
+  nameEl.textContent = user.name;
+  emailEl.textContent = user.email;
+  
+  // Load user's cart items
+  loadCartItems();
+}
 
+async function loadCartItems() {
+  try {
+    const res = await fetch(`/api/cart/${user.id}`);
+    const cartItems = await res.json();
+    
     orderTableBody.innerHTML = '';
 
-    if (cart.length === 0) {
+    if (cartItems.length === 0) {
       const row = document.createElement('tr');
-      row.innerHTML = `<td colspan="3">No purchase history found.</td>`;
+      row.innerHTML = `<td colspan="3">No items in cart.</td>`;
       orderTableBody.appendChild(row);
     } else {
       const today = new Date().toLocaleDateString();
-      cart.forEach((item, index) => {
+      cartItems.forEach((item, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td><span class="order-id">#ORD-2025-${1000 + index}</span></td>
-          <td>${today}</td>
-          <td><span class="status-badge status-shipped">Shipped</span></td>
+          <td><span class="order-id">${item.name} (${item.quantity}x)</span></td>
+          <td>$${(item.price * item.quantity).toFixed(2)}</td>
+          <td><span class="status-badge status-shipped">In Cart</span></td>
         `;
         orderTableBody.appendChild(row);
       });
     }
+  } catch (err) {
+    console.error('Error loading cart items:', err);
+    orderTableBody.innerHTML = '<tr><td colspan="3">Error loading cart items.</td></tr>';
+  }
+}
 
-    // menu 
-    const menuTrigger = document.querySelector('.menu-trigger');
-    const navOverlay = document.getElementById('navOverlay');
-    const closeNavMenu = document.getElementById('closeNavMenu');
+// menu functionality
+const menuTrigger = document.querySelector('.menu-trigger');
+const navOverlay = document.getElementById('navOverlay');
+const closeNavMenu = document.getElementById('closeNavMenu');
 
-    if (menuTrigger && navOverlay && closeNavMenu) {
-      menuTrigger.addEventListener('click', () => {
-        navOverlay.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-      });
+if (menuTrigger && navOverlay && closeNavMenu) {
+  menuTrigger.addEventListener('click', () => {
+    navOverlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  });
 
-      closeNavMenu.addEventListener('click', () => {
-        navOverlay.style.display = 'none';
-        document.body.style.overflow = '';
-      });
-    }
+  closeNavMenu.addEventListener('click', () => {
+    navOverlay.style.display = 'none';
+    document.body.style.overflow = '';
+  });
+}
   </script>
 </body>
 </html>
