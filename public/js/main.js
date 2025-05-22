@@ -15,6 +15,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Failed to load products:', err);
       }
     }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+    
   
     function displayProducts(products) {
       productGrid.innerHTML = '';
@@ -67,10 +77,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const result = await response.json();
         
         if (response.ok) {
-          alert('Item added to cart!');
+          showToast('Item added to cart!');
         } else {
-          alert(result.error || 'Failed to add item to cart');
-        }
+          showToast(result.error || 'Failed to add item to cart');
+        }        
       } catch (err) {
         console.error('Error adding to cart:', err);
         alert('Failed to add item to cart');

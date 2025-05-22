@@ -166,6 +166,19 @@ app.get('/index', (req, res) => {
   app.get('/product', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'product.html'));
   });
+
+app.delete('/api/cart/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    await db.clearCartByUserId(userId);
+    res.json({ message: 'Cart cleared' });
+  } catch (err) {
+    console.error('Error clearing cart:', err);
+    res.status(500).json({ error: 'Failed to clear cart' });
+  }
+});
+
+  
   
 
 // ===== START SERVER ===== //

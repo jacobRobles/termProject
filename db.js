@@ -108,6 +108,12 @@ function getUserByEmail(email) {
     });
   });
 }
+// delete all cart items 
+async function clearCartByUserId(userId) {
+  const db = await getDB();
+  await db.run(`DELETE FROM cart WHERE user_id = ?`, [userId]);
+}
+
 
 // Export together
 module.exports = {
@@ -119,5 +125,6 @@ module.exports = {
   getCartByUserId,
   getCartItem,
   updateCartItemQuantity,
-  clearCart
+  clearCart,
+  clearCartByUserId
 };
