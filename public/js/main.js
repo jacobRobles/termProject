@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const searchInput = document.getElementById('searchInput'); // null
     let searchFromURL = null;
 
-  
     let allProducts = [];
   
     async function loadProducts() {
@@ -41,28 +40,42 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
       });
     }
-    function showToast(message) {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 2000);
-      }
-      
   
-      function addToCart(productId) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const existing = cart.find(item => item.id === productId);
-        if (existing) {
-          existing.quantity += 1;
-        } else {
-          cart.push({ id: productId, quantity: 1 });
-        }
-        localStorage.setItem('cart', JSON.stringify(cart));
-        showToast('Item added to cart!');
-      }
+    async function addToCart(productId) {
+      // Check if user is logged in
+      const user = JSON.parse(localStorage.getItem('user'));
       
+      if (!user) {
+        alert('Please log in to add items to cart.');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/cart', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: user.id,
+            productId: productId,
+            quantity: 1
+          })
+        });
+
+        const result = await response.json();
+        
+        if (response.ok) {
+          alert('Item added to cart!');
+        } else {
+          alert(result.error || 'Failed to add item to cart');
+        }
+      } catch (err) {
+        console.error('Error adding to cart:', err);
+        alert('Failed to add item to cart');
+      }
+    }
   
     if (searchInput) {
       searchInput.addEventListener('input', () => {
@@ -74,8 +87,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         displayProducts(filtered);
       });
     }
-
-    
   
     loadProducts().then(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -97,7 +108,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           displayProducts(allProducts);
         }
       });
-
-    });
+});
       
   
