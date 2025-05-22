@@ -101,14 +101,14 @@
       const confirmPassword = document.getElementById('confirm-password').value;
       const msg = document.getElementById('signup-message');
 
-      // Password confirmation check
+      //in case password is wrong
       if (password !== confirmPassword) {
         msg.textContent = 'Passwords do not match.';
         msg.style.color = 'red';
         return;
       }
 
-      // Send signup data to backend
+      //data to backend
       const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -117,7 +117,7 @@
 
       const data = await res.json();
 
-      // Handle server response
+      //server response
       if (res.ok) {
         msg.textContent = 'Account created! Redirecting to login...';
         msg.style.color = 'green';

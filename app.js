@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 // serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ===== ROUTES ===== //
+// routes //
 
 // Get all products
 app.get('/api/products', async (req, res) => {
@@ -24,7 +24,7 @@ app.get('/api/products', async (req, res) => {
 });
 const bcrypt = require('bcrypt');
 
-// Register/Signup
+// register signup
 app.post('/api/register', async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -46,7 +46,7 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// Login
+// login
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -72,6 +72,42 @@ app.get('/api/products/:id', async (req, res) => {
       console.error("Error fetching product:", err);
       res.status(500).json({ error: "Failed to fetch product" });
     }
+  });
+  // hmm dont think this following part is working, try to fix later, not priority...trying to fix the .html showing in url
+app.get('/index', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  });
+  
+  app.get('/products', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'products.html'));
+  });
+  
+  app.get('/profile', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'profile.html'));
+  });
+  
+  app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  });
+  
+  app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+  });
+  
+  app.get('/faq', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'faq.html'));
+  });
+  
+  app.get('/payment', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'payment.html'));
+  });
+  
+  app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'about.html'));
+  });
+  
+  app.get('/product', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'product.html'));
   });
   
 

@@ -1,4 +1,14 @@
-document.addEventListener('DOMContentLoaded', async () => {
+// Show toast function - make it global so other scripts can call it
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2000);
+  }
+  
+  document.addEventListener('DOMContentLoaded', async () => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsDiv = document.getElementById('cart-items');
     const subtotalEl = document.getElementById('subtotal-amount');
@@ -36,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         cartItemsDiv.appendChild(itemDiv);
       });
   
-      const tax = subtotal * 0.08; // 8% tax, could be changed if needed idk
+      const tax = subtotal * 0.08;
       const shipping = 8.99;
       const total = subtotal + tax + shipping;
   
@@ -47,6 +57,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (err) {
       cartItemsDiv.innerHTML = '<p>Failed to load cart items.</p>';
       console.error(err);
+    }
+  
+    // Clear cart handler
+    const clearBtn = document.getElementById('clearCartBtn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        localStorage.removeItem('cart');
+        showToast('Cart has been cleared!');
+        setTimeout(() => window.location.reload(), 2000);
+      });
     }
   });
   

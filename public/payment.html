@@ -147,7 +147,9 @@
         </div>
 
         <button type="submit" class="btn">Complete Purchase</button>
-        <button type="button" class="btn btn-secondary">Return to Cart</button>
+        <button type="button" class="btn btn-secondary" id="clearCartBtn" style="margin-top: 10px;">Clear Cart</button>
+        <a href="products.html" class="btn btn-secondary">← Return to Products</a>
+
       </form>
     </div>
 
@@ -215,7 +217,13 @@
         document.body.style.overflow = '';
       });
     }
+    
   </script>
   <script src="js/payment.js"></script>
+  
+  <div id="toast" class="toast">Toast message</div>
+
+
+  
 </body>
 </html>

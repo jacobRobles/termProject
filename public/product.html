@@ -5,20 +5,24 @@
   <title>Product Detail - Cascadia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
 
+  <!--header -->
   <header class="site-header">
     <div class="header-left">
       <a href="index.html" class="nav-link">Shop</a>
     </div>
-    <div class="site-logo">Cascadia</div>
+    <a href="index.html" class="site-logo">Cascadia</a>
     <div class="header-right">
-      <a href="profile.html"><span class="icon"><i class="fas fa-user"></i></span></a>
+      <a href="profile.html" class="icon"><i class="fas fa-user"></i></a>
+      <a href="payment.html" class="icon"><i class="fas fa-shopping-bag"></i></a>
     </div>
   </header>
+  
 
+  <!--main product section -->
   <main class="product-detail-wrapper">
     <div class="product-detail-card">
       <img id="productImage" alt="Product image" class="product-detail-image" />
@@ -36,6 +40,8 @@
     <p>© 2025 Cascadia. All rights reserved.</p>
   </footer>
 
+  <div id="toast" class="toast">Item added to cart!</div>
   <script src="js/productDetail.js"></script>
+
 </body>
 </html>

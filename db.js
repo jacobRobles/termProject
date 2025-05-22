@@ -1,7 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./data/database.sqlite');
 
-//  Product quereis  //
+//  product quereis  //
 function getAllProducts() {
   return new Promise((resolve, reject) => {
     db.all("SELECT * FROM products", (err, rows) => {
@@ -20,7 +20,7 @@ function getProductById(id) {
   });
 }
 
-// User queries //
+// user queries //
 function createUser(name, email, hashedPassword) {
   return new Promise((resolve, reject) => {
     db.run(

@@ -46,6 +46,28 @@
             font-size: 14px;
             font-weight: bold;
         }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+          }
+          
+          .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+          }
+          
+          
         
         .site-logo {
             font-size: 24px;
@@ -227,6 +249,56 @@
         .popular-item:hover {
             color: #4a90e2;
         }
+        
+          .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+          }
+          
+          .site-logo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+          }
+          
+          .site-logo:hover {
+            text-decoration: none;
+            color: #111;
+          }
+          
+          .header-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+          }
+          
+          .icon {
+            font-size: 1.2rem;
+            color: #333;
+            text-decoration: none;
+          }
+          
+          .icon:hover {
+            color: #000;
+          }
+
+          .product-card a {
+            text-decoration: none;
+            color: inherit;
+          }
+          
+          .product-card a:hover {
+            text-decoration: none;
+            color: #111;
+          }
+          
+          
+          
 
         /* Responsive styles */
         @media (max-width: 768px) {
@@ -582,7 +654,7 @@ body {
 }
 
 .hero {
-    background: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff') center/cover no-repeat;
+    background: url('https://i.redd.it/dm6qnoo452h61.jpg') center/cover no-repeat;
     height: 200px;
     text-shadow: 0 0 8px black;
 }
@@ -808,6 +880,9 @@ body {
     color: var(--primary-color);
 }
 
+
+
+/*BREAK HERE*/
 .step-number {
     display: flex;
     align-items: center;
@@ -1042,7 +1117,24 @@ body {
 .faq-question.active + .faq-answer {
     display: block;
 }
-
+.category-card {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 1rem;
+    background: #f4f4f4;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    transition: background 0.2s ease;
+  }
+  
+  .category-card:hover {
+    background: #e0e0e0;
+    color: #000;
+    text-decoration: none;
+  }
+  
 /* ===== PROFILE PAGE ===== */
 .profile-container {
     max-width: 1000px;
@@ -1343,7 +1435,60 @@ body {
     text-decoration: none;  /* keeps underline off on hover too */
   }
   
-  
+    /* Ensure each product card is vertically stacked */
+    .product-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 16px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        border-radius: 8px;
+        background: white;
+        margin: 10px;
+      }
+    
+      /* Style for Add to Cart button */
+      .add-to-cart {
+        margin-top: 10px;
+        padding: 10px 16px;
+        background-color: #333;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: background-color 0.2s ease;
+      }
+    
+      .add-to-cart:hover {
+        background-color: #111;
+      }
+
+      .header-left .nav-link {
+        margin-right: 1rem;
+        font-weight: 500;
+        color: #333;
+        text-decoration: none;
+      }
+      
+      .header-left .nav-link:hover {
+        color: #000;
+      }
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem; /* adds spacing between Login and Sign Up */
+      }
+      
+      .header-left .nav-link {
+        white-space: nowrap; /* keeps "Sign Up" on one line */
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+      }
+      
+      
 /* Navigation overlay specific styles */
 .nav-header {
     display: flex;

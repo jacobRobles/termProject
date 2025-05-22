@@ -1,12 +1,15 @@
-# Ignore node_modules
+# node modules
 node_modules/
 
-# Ignore logs
-*.log
+# system junk
+.DS_Store
 
-# Ignore environment files
+# local database
+/data/database.sqlite
+
+# env secrets
 .env
 
-# Ignore system files
-.DS_Store
-Thumbs.db
+# logs
+npm-debug.log
+*.log

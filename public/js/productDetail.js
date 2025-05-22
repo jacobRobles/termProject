@@ -30,11 +30,22 @@ document.addEventListener("DOMContentLoaded", async () => {
           cart.push({ id: product.id, quantity: 1 });
         }
         localStorage.setItem("cart", JSON.stringify(cart));
-        alert("Item added to cart!");
+        showToast("Item added to cart!");
       });
+  
     } catch (err) {
       console.error("Failed to load product:", err);
       document.body.innerHTML = "<p>Error loading product.</p>";
     }
   });
+  
+  // Toast notification function
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2000);
+  }
   
