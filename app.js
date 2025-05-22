@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 // serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// routes //
+// ===== ROUTES ===== //
 
 // Get all products
 app.get('/api/products', async (req, res) => {
@@ -22,9 +22,10 @@ app.get('/api/products', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch products' });
   }
 });
+
 const bcrypt = require('bcrypt');
 
-// register signup
+// Register/Signup
 app.post('/api/register', async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -46,7 +47,7 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// login
+// Login
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -62,6 +63,7 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Get single product
 app.get('/api/products/:id', async (req, res) => {
     const id = req.params.id;
     try {
@@ -72,8 +74,63 @@ app.get('/api/products/:id', async (req, res) => {
       console.error("Error fetching product:", err);
       res.status(500).json({ error: "Failed to fetch product" });
     }
-  });
-  // hmm dont think this following part is working, try to fix later, not priority...trying to fix the .html showing in url
+});
+
+// ===== CART ROUTES ===== //
+
+// Add item to cart
+app.post('/api/cart', async (req, res) => {
+  const { userId, productId, quantity = 1 } = req.body;
+  
+  if (!userId || !productId) {
+    return res.status(400).json({ error: 'User ID and Product ID are required' });
+  }
+
+  try {
+    // Check if item already exists in cart
+    const existingItem = await db.getCartItem(userId, productId);
+    
+    if (existingItem) {
+      // Update quantity
+      await db.updateCartItemQuantity(userId, productId, existingItem.quantity + quantity);
+    } else {
+      // Add new item
+      await db.addToCart(userId, productId, quantity);
+    }
+    
+    res.json({ success: true, message: 'Item added to cart' });
+  } catch (err) {
+    console.error('Error adding to cart:', err);
+    res.status(500).json({ error: 'Failed to add item to cart' });
+  }
+});
+
+// Get user's cart
+app.get('/api/cart/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  
+  try {
+    const cartItems = await db.getCartByUserId(userId);
+    res.json(cartItems);
+  } catch (err) {
+    console.error('Error fetching cart:', err);
+    res.status(500).json({ error: 'Failed to fetch cart' });
+  }
+});
+
+// Clear user's cart
+app.delete('/api/cart/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  
+  try {
+    await db.clearCart(userId);
+    res.json({ success: true, message: 'Cart cleared' });
+  } catch (err) {
+    console.error('Error clearing cart:', err);
+    res.status(500).json({ error: 'Failed to clear cart' });
+  }
+});
+  // hmm don't think this following part is working, try to fix later, not priority...trying to fix the .html showing in url
 app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
   });
