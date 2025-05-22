@@ -86,6 +86,12 @@
     </section>
   </main>
 
+  <div style="display: flex; justify-content: center; margin-top: 15px;">
+    <button id="signOutBtn" class="btn" style="padding: 8px 20px; max-width: 200px;">Sign Out</button>
+  </div>
+  
+
+
   <!-- footer -->
   <footer class="site-footer">
     <p><a href="faq.html" class="footer-link">FAQ</a></p>
@@ -157,5 +163,14 @@ if (menuTrigger && navOverlay && closeNavMenu) {
   });
 }
   </script>
+
+  <script>
+    document.getElementById('signOutBtn').addEventListener('click', () => {
+      localStorage.removeItem('user');
+      localStorage.removeItem('cart'); // Optional: also clear cart on logout
+      window.location.href = 'login.html';
+    });
+  </script>
+  
 </body>
 </html>
