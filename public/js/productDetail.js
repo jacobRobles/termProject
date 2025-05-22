@@ -21,23 +21,46 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("productPrice").textContent = `$${product.price.toFixed(2)}`;
       document.getElementById("productDescription").textContent = product.description;
   
-      document.getElementById("addToCartBtn").addEventListener("click", () => {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const existing = cart.find(item => item.id === product.id);
-        if (existing) {
-          existing.quantity += 1;
-        } else {
-          cart.push({ id: product.id, quantity: 1 });
+      document.getElementById("addToCartBtn").addEventListener("click", async () => {
+        // Check if user is logged in
+        const user = JSON.parse(localStorage.getItem("user"));
+        
+        if (!user) {
+          alert('Please log in to add items to cart.');
+          window.location.href = 'login.html';
+          return;
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
-        showToast("Item added to cart!");
+
+        try {
+          const response = await fetch('/api/cart', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId: user.id,
+              productId: product.id,
+              quantity: 1
+            })
+          });
+
+          const result = await response.json();
+          
+          if (response.ok) {
+            alert('Item added to cart!');
+          } else {
+            alert(result.error || 'Failed to add item to cart');
+          }
+        } catch (err) {
+          console.error('Error adding to cart:', err);
+          alert('Failed to add item to cart');
+        }
       });
-  
     } catch (err) {
       console.error("Failed to load product:", err);
       document.body.innerHTML = "<p>Error loading product.</p>";
     }
-  });
+});
   
   // Toast notification function
   function showToast(message) {
