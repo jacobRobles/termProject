@@ -2,6 +2,10 @@
 
 Cascadia is a mock e-commerce website for outdoor gear. It allows users to browse products, register/login, add items to their cart, and check out — all with a clean, minimal design.
 
+## The Live Website  
+[https://cascadia.onrender.com](https://cascadia.onrender.com)
+
+
 ##  Tech Stack
 
 - **Frontend:** HTML, CSS, JavaScript
@@ -53,7 +57,6 @@ Cascadia is a mock e-commerce website for outdoor gear. It allows users to brows
 - **Rachapoom Phanchotong (Mark)** – helped in CSS and frontend styling; created clean, responsive layouts across pages, styled components for consistency, and ensured mobile-friendliness and modern aesthetics throughout the site.
 
 
-add link to glitch here soon
 
 
 
