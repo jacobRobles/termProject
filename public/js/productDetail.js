@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const productId = params.get("id");
 
   if (!productId) {
-    document.body.innerHTML = "<p>Product not found.</p>";
+    document.body.innerHTML = "<p>Product is not found.</p>";
     return;
   }
 
