@@ -5,6 +5,8 @@ Cascadia is a mock e-commerce website for outdoor gear. It allows users to brows
 ## The Live Website  
 [https://cascadia.onrender.com](https://cascadia.onrender.com)
 
+This link will take you to our deployed site. You will need to sign up, then log in.
+
 
 ##  Tech Stack
 
