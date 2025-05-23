@@ -39,9 +39,10 @@ function getCartByUserId(userId) {
   return new Promise((resolve, reject) => {
     db.all(
       `SELECT products.*, cart_items.quantity, cart_items.id as cart_item_id
-       FROM cart_items
-       JOIN products ON cart_items.product_id = products.id
-       WHERE cart_items.user_id = ?`,
+      FROM cart_items
+      JOIN products ON cart_items.product_id = products.id
+      WHERE cart_items.user_id = ?
+      `,
       [userId],
       (err, rows) => {
         if (err) reject(err);
@@ -109,10 +110,26 @@ function getUserByEmail(email) {
   });
 }
 // delete all cart items 
-async function clearCartByUserId(userId) {
-  const db = await getDB();
-  await db.run(`DELETE FROM cart WHERE user_id = ?`, [userId]);
+function clearCartByUserId(userId) {
+  return new Promise((resolve, reject) => {
+    db.run(`DELETE FROM cart_items WHERE user_id = ?`, [userId], function (err) {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
 }
+
+function deleteCartItem(cartItemId) {
+  return new Promise((resolve, reject) => {
+    db.run(`DELETE FROM cart_items WHERE id = ?`, [cartItemId], function (err) {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
+}
+
+
+
 
 
 // Export together
@@ -126,5 +143,6 @@ module.exports = {
   getCartItem,
   updateCartItemQuantity,
   clearCart,
-  clearCartByUserId
+  clearCartByUserId,
+  deleteCartItem
 };

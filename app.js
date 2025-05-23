@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ===== ROUTES ===== //
 
-// Get all products
+// get all products
 app.get('/api/products', async (req, res) => {
   try {
     const products = await db.getAllProducts();
@@ -105,7 +105,19 @@ app.post('/api/cart', async (req, res) => {
   }
 });
 
-// Get user's cart
+// DELETE individual cart item by cart_item_id (MOVED UP - more specific route first)
+app.delete('/api/cart/item/:id', async (req, res) => {
+  const itemId = req.params.id;
+  try {
+    await db.deleteCartItem(itemId);
+    res.status(200).json({ message: 'Item deleted successfully' });
+  } catch (err) {
+    console.error('Failed to delete item:', err);
+    res.status(500).json({ error: 'Failed to delete item' });
+  }
+});
+
+// Get user's cart (MOVED DOWN - less specific route after more specific ones)
 app.get('/api/cart/:userId', async (req, res) => {
   const userId = req.params.userId;
   
@@ -130,54 +142,6 @@ app.delete('/api/cart/:userId', async (req, res) => {
     res.status(500).json({ error: 'Failed to clear cart' });
   }
 });
-  // hmm don't think this following part is working, try to fix later, not priority...trying to fix the .html showing in url
-app.get('/index', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  });
-  
-  app.get('/products', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'products.html'));
-  });
-  
-  app.get('/profile', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'profile.html'));
-  });
-  
-  app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
-  });
-  
-  app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
-  });
-  
-  app.get('/faq', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'faq.html'));
-  });
-  
-  app.get('/payment', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'payment.html'));
-  });
-  
-  app.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'about.html'));
-  });
-  
-  app.get('/product', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'product.html'));
-  });
-
-app.delete('/api/cart/:userId', async (req, res) => {
-  const userId = req.params.userId;
-  try {
-    await db.clearCartByUserId(userId);
-    res.json({ message: 'Cart cleared' });
-  } catch (err) {
-    console.error('Error clearing cart:', err);
-    res.status(500).json({ error: 'Failed to clear cart' });
-  }
-});
-
   
   
 

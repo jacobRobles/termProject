@@ -1,24 +1,24 @@
 // Show toast function - make it global so other scripts can call it
 function showToast(message) {
-  const toast = document.getElementById('toast');
+  const toast = document.getElementById("toast");
   toast.textContent = message;
-  toast.classList.add('show');
+  toast.classList.add("show");
   setTimeout(() => {
-    toast.classList.remove('show');
+    toast.classList.remove("show");
   }, 2000);
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const cartItemsDiv = document.getElementById('cart-items');
-  const subtotalEl = document.getElementById('subtotal-amount');
-  const taxEl = document.getElementById('estimated-tax');
-  const totalEl = document.getElementById('total-amount');
+document.addEventListener("DOMContentLoaded", async () => {
+  const cartItemsDiv = document.getElementById("cart-items");
+  const subtotalEl = document.getElementById("subtotal-amount");
+  const taxEl = document.getElementById("estimated-tax");
+  const totalEl = document.getElementById("total-amount");
 
   // Check if user is logged in
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   if (!user) {
-    cartItemsDiv.innerHTML = '<p>Please log in to view your cart.</p>';
+    cartItemsDiv.innerHTML = "<p>Please log in to view your cart.</p>";
     return;
   }
 
@@ -28,28 +28,52 @@ document.addEventListener('DOMContentLoaded', async () => {
     const cartItems = await res.json();
 
     if (cartItems.length === 0) {
-      cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+      cartItemsDiv.innerHTML = "<p>Your cart is empty.</p>";
       return;
     }
 
     let subtotal = 0;
 
-    cartItems.forEach(item => {
+    cartItems.forEach((item) => {
       const itemTotal = item.price * item.quantity;
       subtotal += itemTotal;
 
-      const itemDiv = document.createElement('div');
-      itemDiv.classList.add('product-item');
+      const itemDiv = document.createElement("div");
+      itemDiv.classList.add("product-item");
       itemDiv.innerHTML = `
-        <img src="${item.image}" alt="${item.name}" class="product-image">
-        <div class="product-details">
-          <h3 class="product-name">${item.name}</h3>
-          <p class="product-variant">Qty: ${item.quantity}</p>
-          <p class="product-price">$${itemTotal.toFixed(2)}</p>
-        </div>
-      `;
+  <img src="${item.image}" alt="${item.name}" class="product-image">
+  <div class="product-details">
+    <h3 class="product-name">${item.name}</h3>
+    <p class="product-variant">Qty: ${item.quantity}</p>
+    <p class="product-price">$${itemTotal.toFixed(2)}</p>
+    <button class="remove-btn" data-id="${item.cart_item_id}">Remove</button>
+
+  </div>
+`;
+
       cartItemsDiv.appendChild(itemDiv);
     });
+
+    document.querySelectorAll('.remove-btn').forEach(button => {
+      button.addEventListener('click', async () => {
+        const cartItemId = button.getAttribute('data-id');
+        try {
+          const res = await fetch(`/api/cart/item/${cartItemId}`, {
+            method: 'DELETE'
+          });
+          if (res.ok) {
+            showToast('Item removed from cart!');
+            setTimeout(() => window.location.reload(), 1500);
+          } else {
+            showToast('Failed to remove item.');
+          }
+        } catch (err) {
+          console.error('Error removing item:', err);
+          showToast('Error removing item.');
+        }
+      });
+    });
+    
 
     const tax = subtotal * 0.08; // 8% tax
     const shipping = 8.99;
@@ -58,30 +82,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
     taxEl.textContent = `$${tax.toFixed(2)}`;
     totalEl.textContent = `$${total.toFixed(2)}`;
-
   } catch (err) {
-    cartItemsDiv.innerHTML = '<p>Failed to load cart items.</p>';
-    console.error('Error loading cart:', err);
+    cartItemsDiv.innerHTML = "<p>Failed to load cart items.</p>";
+    console.error("Error loading cart:", err);
   }
 
   // Clear cart handler (server-side)
-  const clearBtn = document.getElementById('clearCartBtn');
+  const clearBtn = document.getElementById("clearCartBtn");
   if (clearBtn) {
-    clearBtn.addEventListener('click', async () => {
+    clearBtn.addEventListener("click", async () => {
       try {
         const res = await fetch(`/api/cart/${user.id}`, {
-          method: 'DELETE',
+          method: "DELETE",
         });
 
         if (res.ok) {
-          showToast('Cart has been cleared!');
+          showToast("Cart has been cleared!");
           setTimeout(() => window.location.reload(), 2000);
         } else {
-          showToast('Failed to clear cart.');
+          showToast("Failed to clear cart.");
         }
       } catch (err) {
-        console.error('Error clearing cart:', err);
-        showToast('Error clearing cart.');
+        console.error("Error clearing cart:", err);
+        showToast("Error clearing cart.");
       }
     });
   }
